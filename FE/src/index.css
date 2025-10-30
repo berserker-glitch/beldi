@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Morocco Marketplace Design System - 4 Color Palette */
+    /* #eef9fc - Background Light (soft cyan/white) */
+    /* #050e0f - Primary Text/Dark (deep black-blue) */
+    /* #5eb1bf - Primary Accent/CTA (teal) */
+    /* #042a2b - Secondary Dark (dark teal) */
+    
+    /* Core Colors */
+    --background: 191 71% 96%; /* #eef9fc */
+    --foreground: 195 33% 4%; /* #050e0f */
+    
+    /* Primary Accent - Teal for CTAs and interactive elements */
+    --primary: 187 39% 55%; /* #5eb1bf */
+    --primary-foreground: 191 71% 96%; /* #eef9fc */
+    --primary-hover: 187 39% 48%; /* Darker teal */
+    
+    /* Secondary Dark - For headers, footers, dark sections */
+    --secondary: 182 90% 8%; /* #042a2b */
+    --secondary-foreground: 191 71% 96%; /* #eef9fc */
+    
+    /* Accent - Same as primary */
+    --accent: 187 39% 55%; /* #5eb1bf */
+    --accent-foreground: 191 71% 96%; /* #eef9fc */
+    
+    /* Muted variants */
+    --muted: 191 50% 92%; /* Lighter version of background */
+    --muted-foreground: 195 20% 35%; /* Muted text */
+    
+    /* Status Colors - Derived from palette */
+    --success: 187 39% 45%; /* Darker teal for success */
+    --success-foreground: 191 71% 96%;
+    --error: 0 65% 50%; /* Red for errors */
+    --error-foreground: 191 71% 96%;
+    --warning: 45 95% 55%; /* Orange for warnings */
+    --warning-foreground: 195 33% 4%;
+    --info: 187 39% 55%; /* Same as primary */
+    --info-foreground: 191 71% 96%;
+    
+    /* UI Elements */
+    --card: 191 71% 96%; /* #eef9fc */
+    --card-foreground: 195 33% 4%; /* #050e0f */
+    --popover: 191 71% 96%;
+    --popover-foreground: 195 33% 4%;
+    --border: 191 40% 85%; /* Light border */
+    --input: 191 71% 96%;
+    --input-border: 191 40% 75%;
+    --ring: 187 39% 55%; /* Teal focus ring */
+    
+    /* Shadows - Subtle */
+    --shadow-sm: 0 2px 4px rgba(5, 14, 15, 0.06);
+    --shadow-md: 0 4px 8px rgba(5, 14, 15, 0.08);
+    --shadow-lg: 0 8px 16px rgba(5, 14, 15, 0.1);
+    
+    /* Border Radius - Modern and friendly */
+    --radius-sm: 0.5rem; /* 8px */
+    --radius-md: 0.75rem; /* 12px */
+    --radius-lg: 1rem; /* 16px */
+    --radius: 0.5rem;
+    
+    /* Spacing - 4px base system */
+    --spacing-xs: 0.25rem; /* 4px */
+    --spacing-sm: 0.5rem; /* 8px */
+    --spacing-md: 1rem; /* 16px */
+    --spacing-lg: 1.5rem; /* 24px */
+    --spacing-xl: 2rem; /* 32px */
+    --spacing-xxl: 3rem; /* 48px */
+    
+    /* Transitions - Smooth and elegant */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Sidebar (uses secondary dark) */
+    --sidebar-background: 182 90% 8%; /* #042a2b */
+    --sidebar-foreground: 191 71% 96%;
+    --sidebar-primary: 187 39% 55%;
+    --sidebar-primary-foreground: 191 71% 96%;
+    --sidebar-accent: 182 90% 12%;
+    --sidebar-accent-foreground: 191 71% 96%;
+    --sidebar-border: 182 70% 15%;
+    --sidebar-ring: 187 39% 55%;
+  }
+
+  .dark {
+    /* Dark mode uses inverted palette */
+    --background: 195 33% 4%; /* #050e0f */
+    --foreground: 191 71% 96%; /* #eef9fc */
+    --card: 182 90% 8%; /* #042a2b */
+    --card-foreground: 191 71% 96%;
+    --popover: 182 90% 8%;
+    --popover-foreground: 191 71% 96%;
+    --primary: 187 39% 55%; /* #5eb1bf */
+    --primary-foreground: 195 33% 4%;
+    --secondary: 182 90% 12%;
+    --secondary-foreground: 191 71% 96%;
+    --muted: 182 70% 10%;
+    --muted-foreground: 191 40% 70%;
+    --accent: 187 39% 55%;
+    --accent-foreground: 195 33% 4%;
+    --border: 182 50% 20%;
+    --input: 182 90% 8%;
+    --input-border: 182 50% 25%;
+    --ring: 187 39% 55%;
+    --sidebar-background: 195 33% 4%;
+    --sidebar-foreground: 191 71% 96%;
+    --sidebar-primary: 187 39% 55%;
+    --sidebar-primary-foreground: 195 33% 4%;
+    --sidebar-accent: 182 90% 8%;
+    --sidebar-accent-foreground: 191 71% 96%;
+    --sidebar-border: 182 50% 15%;
+    --sidebar-ring: 187 39% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  /* Hide scrollbar for all browsers */
+  * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+
+  *::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  html {
+    background-color: #042a2b; /* Dark teal to match splash screen */
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* Apply pattern to page-level containers that need it */
+  .page-pattern {
+    background-color: hsl(var(--background));
+    background-image: url("data:image/svg+xml,%3Csvg width='86' height='86' viewBox='0 0 86 86' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(94,177,191,0.15)' stroke-width='1'%3E%3Cpath d='M21.5 0L28.96 8.48L40.24 7.76L39.52 19.04L48 26.5L39.52 33.96L40.24 45.24L28.96 44.52L21.5 53L14.04 44.52L2.76 45.24L3.48 33.96L-5 26.5L3.48 19.04L2.76 7.76L14.04 8.48L21.5 0Z'/%3E%3Cpath d='M64.5 0L71.96 8.48L83.24 7.76L82.52 19.04L91 26.5L82.52 33.96L83.24 45.24L71.96 44.52L64.5 53L57.04 44.52L45.76 45.24L46.48 33.96L38 26.5L46.48 19.04L45.76 7.76L57.04 8.48L64.5 0Z'/%3E%3Cpath d='M21.5 43L28.96 51.48L40.24 50.76L39.52 62.04L48 69.5L39.52 76.96L40.24 88.24L28.96 87.52L21.5 96L14.04 87.52L2.76 88.24L3.48 76.96L-5 69.5L3.48 62.04L2.76 50.76L14.04 51.48L21.5 43Z'/%3E%3Cpath d='M64.5 43L71.96 51.48L83.24 50.76L82.52 62.04L91 69.5L82.52 76.96L83.24 88.24L71.96 87.52L64.5 96L57.04 87.52L45.76 88.24L46.48 76.96L38 69.5L46.48 62.04L45.76 50.76L57.04 51.48L64.5 43Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 86px 86px;
+    background-repeat: repeat;
+    background-attachment: fixed;
+  }
+
+  /* Moroccan 8-pointed star zelij pattern for light sections */
+  .zelij-pattern {
+    position: relative;
+    background-image: url("data:image/svg+xml,%3Csvg width='86' height='86' viewBox='0 0 86 86' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(94,177,191,0.08)' stroke-width='1'%3E%3Cpath d='M21.5 0L28.96 8.48L40.24 7.76L39.52 19.04L48 26.5L39.52 33.96L40.24 45.24L28.96 44.52L21.5 53L14.04 44.52L2.76 45.24L3.48 33.96L-5 26.5L3.48 19.04L2.76 7.76L14.04 8.48L21.5 0Z'/%3E%3Cpath d='M64.5 0L71.96 8.48L83.24 7.76L82.52 19.04L91 26.5L82.52 33.96L83.24 45.24L71.96 44.52L64.5 53L57.04 44.52L45.76 45.24L46.48 33.96L38 26.5L46.48 19.04L45.76 7.76L57.04 8.48L64.5 0Z'/%3E%3Cpath d='M21.5 43L28.96 51.48L40.24 50.76L39.52 62.04L48 69.5L39.52 76.96L40.24 88.24L28.96 87.52L21.5 96L14.04 87.52L2.76 88.24L3.48 76.96L-5 69.5L3.48 62.04L2.76 50.76L14.04 51.48L21.5 43Z'/%3E%3Cpath d='M64.5 43L71.96 51.48L83.24 50.76L82.52 62.04L91 69.5L82.52 76.96L83.24 88.24L71.96 87.52L64.5 96L57.04 87.52L45.76 88.24L46.48 76.96L38 69.5L46.48 62.04L45.76 50.76L57.04 51.48L64.5 43Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 86px 86px;
+    background-repeat: repeat;
+  }
+
+  /* Darker zelij pattern for dark sections */
+  .zelij-pattern-dark {
+    position: relative;
+    background-image: url("data:image/svg+xml,%3Csvg width='86' height='86' viewBox='0 0 86 86' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(94,177,191,0.12)' stroke-width='1'%3E%3Cpath d='M21.5 0L28.96 8.48L40.24 7.76L39.52 19.04L48 26.5L39.52 33.96L40.24 45.24L28.96 44.52L21.5 53L14.04 44.52L2.76 45.24L3.48 33.96L-5 26.5L3.48 19.04L2.76 7.76L14.04 8.48L21.5 0Z'/%3E%3Cpath d='M64.5 0L71.96 8.48L83.24 7.76L82.52 19.04L91 26.5L82.52 33.96L83.24 45.24L71.96 44.52L64.5 53L57.04 44.52L45.76 45.24L46.48 33.96L38 26.5L46.48 19.04L45.76 7.76L57.04 8.48L64.5 0Z'/%3E%3Cpath d='M21.5 43L28.96 51.48L40.24 50.76L39.52 62.04L48 69.5L39.52 76.96L40.24 88.24L28.96 87.52L21.5 96L14.04 87.52L2.76 88.24L3.48 76.96L-5 69.5L3.48 62.04L2.76 50.76L14.04 51.48L21.5 43Z'/%3E%3Cpath d='M64.5 43L71.96 51.48L83.24 50.76L82.52 62.04L91 69.5L82.52 76.96L83.24 88.24L71.96 87.52L64.5 96L57.04 87.52L45.76 88.24L46.48 76.96L38 69.5L46.48 62.04L45.76 50.76L57.04 51.48L64.5 43Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 86px 86px;
+    background-repeat: repeat;
+  }
+}
