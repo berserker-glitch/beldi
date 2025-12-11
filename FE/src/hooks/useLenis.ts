@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
 import Lenis from 'lenis';
 
+type LenisWindow = Window & {
+  lenis?: Lenis;
+};
+
 export const useLenis = () => {
   useEffect(() => {
-    // Initialize Lenis
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -16,10 +19,9 @@ export const useLenis = () => {
       infinite: false,
     });
 
-    // Store Lenis instance on window for ScrollToTop component to access
-    (window as any).lenis = lenis;
+    const lenisWindow = window as LenisWindow;
+    lenisWindow.lenis = lenis;
 
-    // Animation loop
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -27,10 +29,9 @@ export const useLenis = () => {
 
     requestAnimationFrame(raf);
 
-    // Cleanup
     return () => {
       lenis.destroy();
-      delete (window as any).lenis;
+      delete lenisWindow.lenis;
     };
   }, []);
 };

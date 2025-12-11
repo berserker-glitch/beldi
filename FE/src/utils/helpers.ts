@@ -1,4 +1,40 @@
+import type { Product } from "@/types";
+
 // Utility helper functions for Morocco Marketplace
+
+const CATEGORY_IMAGE_FALLBACKS: Record<string, string> = {
+  "traditional wear": "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=900&q=80",
+  handicrafts: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&w=900&q=80",
+  ceramics: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=900&q=80",
+  carpets: "https://images.unsplash.com/photo-1501127122-f385ca6ddd3d?auto=format&fit=crop&w=900&q=80",
+  rugs: "https://images.unsplash.com/photo-1523419409543-0c1df022bddb?auto=format&fit=crop&w=900&q=80",
+  gaming: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=900&q=80",
+  pastries: "https://images.unsplash.com/photo-1481391200999-235277aa41db?auto=format&fit=crop&w=900&q=80",
+  spices: "https://images.unsplash.com/photo-1506084868230-bb9d95c24759?auto=format&fit=crop&w=900&q=80",
+  beauty: "https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=900&q=80",
+  hammam: "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=900&q=80",
+  laptops: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=900&q=80",
+  audio: "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=900&q=80",
+  gifts: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80",
+};
+
+const DEFAULT_PRODUCT_IMAGE =
+  "https://images.unsplash.com/photo-1505164294036-5fad710ae511?auto=format&fit=crop&w=900&q=80";
+
+export const getCategoryFallbackImage = (category?: string): string => {
+  if (!category) return DEFAULT_PRODUCT_IMAGE;
+  return CATEGORY_IMAGE_FALLBACKS[category.toLowerCase()] ?? DEFAULT_PRODUCT_IMAGE;
+};
+
+export const getProductCoverImage = (product: Product): string => {
+  const validImage = product.images?.find(
+    (image) => image && !image.includes("placeholder") && !image.endsWith(".svg")
+  );
+  if (validImage) {
+    return validImage;
+  }
+  return getCategoryFallbackImage(product.category);
+};
 
 /**
  * Format price in Moroccan Dirham (MAD)
@@ -150,11 +186,11 @@ export const isBusinessOpen = (hours?: {
 /**
  * Debounce function for search inputs
  */
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): ((...args: Parameters<T>) => void) => {
-  let timeout: NodeJS.Timeout;
+  let timeout: ReturnType<typeof setTimeout>;
 
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);

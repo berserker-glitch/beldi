@@ -5,142 +5,125 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-secondary text-secondary-foreground mt-auto zelij-pattern-dark">
-      <div className="container mx-auto px-4 py-8 md:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* About Section */}
+    <footer className="relative mt-auto bg-secondary text-secondary-foreground">
+      <div className="absolute inset-0 opacity-20 zelij-pattern-dark" aria-hidden="true" />
+      <div className="container relative mx-auto px-4 py-12 lg:py-16">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">B</span>
-              </div>
-              <span className="text-lg font-bold">BELDI</span>
+            <div>
+              <span className="font-display text-2xl tracking-[0.3em] text-primary">BELDI</span>
+              <p className="mt-2 text-xs uppercase tracking-[0.5em] text-secondary-foreground/70">
+                Maison
+              </p>
             </div>
             <p className="text-sm text-secondary-foreground/80">
-              Morocco's authentic bazaar for traditional crafts and artisan goods. Shop handmade, support local artisans.
+              A modern riad of Moroccan craftsmanship. We partner with verified artisans to curate
+              timeless pieces for contemporary homes.
+            </p>
+            <div className="h-px w-12 bg-primary/70" />
+            <p className="text-xs uppercase tracking-[0.4em] text-secondary-foreground/60">
+              Casablanca • Marrakech • Fès
             </p>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h3 className="text-base font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.4em] text-secondary-foreground/70">
+              Explore
+            </h3>
+            <ul className="mt-4 space-y-3 text-sm">
               <li>
-                <Link
-                  to="/"
-                  className="text-sm text-secondary-foreground/80 hover:text-primary transition-colors duration-200 focus:outline-none focus:underline"
-                >
-                  Home
+                <Link to="/search?collection=casa" className="transition hover:text-primary">
+                  Ceremonial Tea Sets
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/search"
-                  className="text-sm text-secondary-foreground/80 hover:text-primary transition-colors duration-200 focus:outline-none focus:underline"
-                >
-                  Search
+                <Link to="/search?category=Handicrafts" className="transition hover:text-primary">
+                  Handwoven Rugs
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/cart"
-                  className="text-sm text-secondary-foreground/80 hover:text-primary transition-colors duration-200 focus:outline-none focus:underline"
-                >
-                  Cart
+                <Link to="/search?tag=gift" className="transition hover:text-primary">
+                  Gifting Atelier
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/profile"
-                  className="text-sm text-secondary-foreground/80 hover:text-primary transition-colors duration-200 focus:outline-none focus:underline"
-                >
-                  Profile
+                <Link to="/reviews" className="transition hover:text-primary">
+                  Reviews & Stories
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Support */}
           <div>
-            <h3 className="text-base font-bold mb-4">Support</h3>
-            <ul className="space-y-2">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.4em] text-secondary-foreground/70">
+              Visit & Support
+            </h3>
+            <ul className="mt-4 space-y-3 text-sm">
               <li>
                 <a
-                  href="mailto:support@moroccomarket.ma"
-                  className="text-sm text-secondary-foreground/80 hover:text-primary transition-colors duration-200 focus:outline-none focus:underline"
+                  href="mailto:concierge@beldi.ma"
+                  className="transition hover:text-primary"
                 >
-                  Contact Us
+                  concierge@beldi.ma
                 </a>
               </li>
               <li>
-                <Link
-                  to="/terms"
-                  className="text-sm text-secondary-foreground/80 hover:text-primary transition-colors duration-200 focus:outline-none focus:underline"
-                >
-                  Terms of Service
+                <Link to="/terms" className="transition hover:text-primary">
+                  Terms & Rituals
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/privacy"
-                  className="text-sm text-secondary-foreground/80 hover:text-primary transition-colors duration-200 focus:outline-none focus:underline"
-                >
-                  Privacy Policy
+                <Link to="/privacy" className="transition hover:text-primary">
+                  Privacy
+                </Link>
+              </li>
+              <li>
+                <Link to="/order-tracking" className="transition hover:text-primary">
+                  Track Order
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Social Media */}
-          <div>
-            <h3 className="text-base font-bold mb-4">Connect With Us</h3>
-            <div className="flex space-x-4">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-secondary-foreground/10 hover:bg-primary flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                aria-label="Visit our Facebook page"
-              >
-                <Facebook size={20} aria-hidden="true" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-secondary-foreground/10 hover:bg-primary flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                aria-label="Visit our Twitter page"
-              >
-                <Twitter size={20} aria-hidden="true" />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-secondary-foreground/10 hover:bg-primary flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                aria-label="Visit our Instagram page"
-              >
-                <Instagram size={20} aria-hidden="true" />
-              </a>
-              <a
-                href="mailto:support@moroccomarket.ma"
-                className="w-10 h-10 rounded-lg bg-secondary-foreground/10 hover:bg-primary flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                aria-label="Send us an email"
-              >
-                <Mail size={20} aria-hidden="true" />
-              </a>
-            </div>
-            <p className="text-xs text-secondary-foreground/70 mt-4">
-              Stay updated with the latest businesses and offers
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.4em] text-secondary-foreground/70">
+              Souk Dispatch
+            </h3>
+            <p className="text-sm text-secondary-foreground/80">
+              Receive limited capsule drops, artisan stories, and private appointments.
             </p>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <input
+                type="email"
+                placeholder="Email address"
+                className="flex-1 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm backdrop-blur placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-primary/60"
+              />
+              <button className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
+                Join
+              </button>
+            </div>
+            <div className="flex gap-3 pt-3">
+              {[
+                { icon: Facebook, label: "Facebook" },
+                { icon: Twitter, label: "Twitter" },
+                { icon: Instagram, label: "Instagram" },
+                { icon: Mail, label: "Email" },
+              ].map(({ icon: Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 transition hover:-translate-y-0.5 hover:border-primary"
+                  aria-label={label}
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-secondary-foreground/20 text-center">
-          <p className="text-sm text-secondary-foreground/70">
-            © {currentYear} BELDI. Supporting local businesses across Morocco.
-          </p>
+        <div className="mt-12 border-t border-white/10 pt-6 text-center text-xs uppercase tracking-[0.4em] text-secondary-foreground/60">
+          © {currentYear} Maison BELDI — Crafted with Moroccan soul.
         </div>
       </div>
     </footer>

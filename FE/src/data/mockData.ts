@@ -2608,6 +2608,16 @@ export const mockUser: User = {
 };
 
 // Helper functions
+export interface ProductSearchOptions {
+  category?: string;
+  region?: string;
+  businessId?: string;
+  tags?: string[];
+  minPrice?: number;
+  maxPrice?: number;
+  featuredOnly?: boolean;
+}
+
 export const getBusinessById = (id: string): Business | undefined => {
   return mockBusinesses.find((b) => b.id === id);
 };
@@ -2618,6 +2628,65 @@ export const getProductById = (id: string): Product | undefined => {
 
 export const getProductsByBusinessId = (businessId: string): Product[] => {
   return mockProducts.filter((p) => p.businessId === businessId);
+};
+
+export const searchProducts = (
+  query: string,
+  options: ProductSearchOptions = {}
+): Product[] => {
+  const lowerQuery = query.trim().toLowerCase();
+
+  return mockProducts.filter((product) => {
+    const business = getBusinessById(product.businessId);
+    const searchableStrings = [
+      product.name,
+      product.description,
+      product.category,
+      ...(product.tags || []),
+      business?.name,
+      business?.city,
+      business?.category,
+    ]
+      .filter(Boolean)
+      .map((value) => value!.toLowerCase());
+
+    const matchesQuery =
+      !lowerQuery || searchableStrings.some((value) => value.includes(lowerQuery));
+
+    const matchesCategory = !options.category
+      || product.category.toLowerCase() === options.category.toLowerCase();
+
+    const matchesRegion = !options.region || business?.region === options.region;
+
+    const matchesBusiness = !options.businessId || product.businessId === options.businessId;
+
+    const matchesTags =
+      !options.tags ||
+      options.tags.every((tag) =>
+        product.tags?.some((productTag) => productTag.toLowerCase() === tag.toLowerCase())
+      );
+
+    const matchesPrice =
+      (!options.minPrice || product.price >= options.minPrice) &&
+      (!options.maxPrice || product.price <= options.maxPrice);
+
+    const matchesFeatured = !options.featuredOnly || product.featured;
+
+    return (
+      matchesQuery &&
+      matchesCategory &&
+      matchesRegion &&
+      matchesBusiness &&
+      matchesTags &&
+      matchesPrice &&
+      matchesFeatured
+    );
+  });
+};
+
+export const getFeaturedProducts = (limit = 10): Product[] => {
+  const featured = mockProducts.filter((product) => product.featured);
+  return featured.slice(0, limit);
 };
 
 export const getReviewsByBusinessId = (businessId: string): Review[] => {
@@ -2641,13 +2710,13 @@ export const searchBusinesses = (query: string, region?: string): Business[] => 
 
 // Suggested searches
 export const suggestedSearches = [
-  'Gaming Café in Tangier',
-  'Traditional Clothing in Casablanca',
-  'Restaurants in Marrakech',
-  'Barber Shop in Rabat',
-  'Electronics in Fès',
-  'Bakery in Agadir',
-  'Spa in Meknès',
-  'Books in Oujda',
+  'Handwoven Berber rugs',
+  'Saffron gift set',
+  'Essaouira ceramics',
+  'Atlas wool blankets',
+  'Medina spa rituals',
+  'Leather poufs Marrakech',
+  'Casablanca kaftans',
+  'Chefchaouen pottery',
 ];
 

@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { searchBusinesses } from "@/data/mockData";
-import { debounce } from "@/utils/helpers";
+import { searchProducts, getBusinessById } from "@/data/mockData";
+import { debounce, getProductCoverImage } from "@/utils/helpers";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -11,48 +11,50 @@ interface SearchBarProps {
   autoFocus?: boolean;
 }
 
+interface ProductSuggestion {
+  id: string;
+  label: string;
+  meta: string;
+  image: string;
+}
+
 const SearchBar = ({
   onSearch,
-  placeholder = "Search for services, products, or locations...",
+  placeholder = "Search for rugs, saffron, medina rituals, artisans...",
   autoFocus = false,
 }: SearchBarProps) => {
   const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<ProductSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
-  // Debounced search for autocomplete
   useEffect(() => {
     const debouncedSearch = debounce((searchQuery: string) => {
       if (searchQuery.trim().length >= 2) {
-        const results = searchBusinesses(searchQuery);
-        const suggestionsList = results
-          .slice(0, 5)
-          .map((business) => business.name);
-        
-        // Also add category suggestions
-        const categoryMatches = results
-          .filter((b) => b.category.toLowerCase().includes(searchQuery.toLowerCase()))
-          .map((b) => b.category);
-        
-        const uniqueSuggestions = Array.from(
-          new Set([...suggestionsList, ...categoryMatches])
-        ).slice(0, 6);
+        const results = searchProducts(searchQuery).slice(0, 6);
+        const suggestionPayload = results.map((product) => {
+          const business = getBusinessById(product.businessId);
+          return {
+            id: product.id,
+            label: product.name,
+            meta: `${product.category}${business ? ` • ${business.city}` : ""}`,
+            image: getProductCoverImage(product),
+          };
+        });
 
-        setSuggestions(uniqueSuggestions);
-        setShowSuggestions(true);
+        setSuggestions(suggestionPayload);
+        setShowSuggestions(suggestionPayload.length > 0);
       } else {
         setSuggestions([]);
         setShowSuggestions(false);
       }
-    }, 300);
+    }, 250);
 
     debouncedSearch(query);
   }, [query]);
 
-  // Handle click outside to close suggestions
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -76,9 +78,9 @@ const SearchBar = ({
     }
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setQuery(suggestion);
-    onSearch(suggestion);
+  const handleSuggestionClick = (suggestion: ProductSuggestion) => {
+    setQuery(suggestion.label);
+    onSearch(suggestion.label);
     setShowSuggestions(false);
     setActiveSuggestionIndex(-1);
   };
@@ -113,10 +115,10 @@ const SearchBar = ({
   return (
     <div className="relative w-full">
       <form onSubmit={handleSubmit} className="relative">
-        <div className="relative">
+        <div className="relative flex items-center rounded-full border border-border/70 bg-white/80 backdrop-blur-md shadow-[0_15px_45px_rgba(34,22,18,0.08)] pr-2 pl-4">
           <Search
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground pointer-events-none"
-            size={20}
+            className="text-muted-foreground/70 mr-2 hidden sm:flex"
+            size={18}
             aria-hidden="true"
           />
           <Input
@@ -127,9 +129,9 @@ const SearchBar = ({
             onKeyDown={handleKeyDown}
             onFocus={() => query.length >= 2 && setShowSuggestions(true)}
             placeholder={placeholder}
-            className="pl-12 pr-24 h-14 text-base border-2 border-border focus:border-primary transition-all duration-200 rounded-lg shadow-sm"
+            className="h-16 w-full border-none bg-transparent px-0 text-base font-medium text-foreground placeholder:text-muted-foreground/70 focus-visible:ring-0 focus-visible:ring-offset-0"
             autoFocus={autoFocus}
-            aria-label="Search for businesses, products, or services"
+            aria-label="Search artisan products"
             aria-autocomplete="list"
             aria-controls="search-suggestions"
             aria-expanded={showSuggestions}
@@ -141,41 +143,52 @@ const SearchBar = ({
           />
           <Button
             type="submit"
-            size="default"
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-10 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-md transition-all duration-200"
+            size="lg"
+            className="rounded-full bg-primary px-6 py-2 font-semibold text-primary-foreground shadow-lg hover:bg-primary-hover"
             disabled={!query.trim()}
             aria-label="Search"
           >
-          Search
-        </Button>
-      </div>
-    </form>
+            Search
+          </Button>
+        </div>
+      </form>
 
-      {/* Autocomplete Suggestions */}
       {showSuggestions && suggestions.length > 0 && (
         <div
           ref={suggestionsRef}
           id="search-suggestions"
-          className="absolute z-50 w-full mt-2 bg-card border-2 border-border rounded-lg shadow-lg overflow-hidden animate-slide-up"
+          className="absolute z-50 mt-3 w-full overflow-hidden rounded-3xl border border-border/70 bg-white shadow-[0_20px_50px_rgba(34,22,18,0.12)] animate-slide-up"
           role="listbox"
         >
           {suggestions.map((suggestion, index) => (
             <button
-              key={index}
+              key={suggestion.id}
               id={`suggestion-${index}`}
               type="button"
               onClick={() => handleSuggestionClick(suggestion)}
-              className={`w-full text-left px-4 py-3 transition-colors duration-150 ${
+              className={`flex w-full items-center gap-4 px-4 py-3 text-left transition-colors duration-200 ${
                 index === activeSuggestionIndex
-                  ? "bg-primary text-primary-foreground"
-                  : "hover:bg-muted"
-              } ${index !== suggestions.length - 1 ? "border-b border-border" : ""}`}
+                  ? "bg-primary/10"
+                  : "hover:bg-muted/50"
+              } ${index !== suggestions.length - 1 ? "border-b border-border/60" : ""}`}
               role="option"
               aria-selected={index === activeSuggestionIndex}
             >
-              <div className="flex items-center">
-                <Search size={16} className="mr-3 opacity-60" aria-hidden="true" />
-                <span className="text-sm font-medium">{suggestion}</span>
+              <div className="h-12 w-12 overflow-hidden rounded-2xl border border-border/60 bg-muted">
+                <img
+                  src={suggestion.image}
+                  alt={suggestion.label}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold text-foreground">
+                  {suggestion.label}
+                </span>
+                <span className="text-xs uppercase tracking-wider text-muted-foreground">
+                  {suggestion.meta}
+                </span>
               </div>
             </button>
           ))}

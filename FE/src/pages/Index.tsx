@@ -1,405 +1,271 @@
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
-import { BadgeCheck, Package, TrendingUp, Zap, Sparkles, Shirt, Home as HomeIcon, Coffee, Star, MapPin, ChevronRight, Quote, ArrowRight, Search, ShoppingCart, Heart, Users, Mail, CheckCircle2 } from "lucide-react";
+import SearchBar from "@/components/search/SearchBar";
+import SuggestedSearches from "@/components/search/SuggestedSearches";
+import ProductCard from "@/components/products/ProductCard";
+import { getFeaturedProducts } from "@/data/mockData";
+import { Product } from "@/types";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowUpRight, MapPin, Sparkles } from "lucide-react";
+
+const ritualCapsules = [
+  {
+    title: "Mint Tea Ceremony",
+    description: "Hammered trays • crystal khayma glasses • organic mint bundles",
+    image:
+      "https://images.unsplash.com/photo-1519162584292-56dfc9eb5db1?auto=format&fit=crop&w=800&q=80",
+    href: "/search?collection=tea",
+  },
+  {
+    title: "Medina Textiles",
+    description: "Cactus silk throws & spice tinted cushions from Marrakech",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
+    href: "/search?category=Carpets",
+  },
+  {
+    title: "Essaouira Glow",
+    description: "Thuya wood, brass lanterns, and ocean-dyed ceramics",
+    image:
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+    href: "/search?collection=coastal",
+  },
+];
+
+const atlasJourneys = [
+  {
+    city: "Fès Medina",
+    detail: "Majolica ateliers",
+    story:
+      "Hand-thrown bowls fired in century-old kilns with cobalt pigments sourced from Chefchaouen.",
+  },
+  {
+    city: "Marrakech",
+    detail: "Leather souks",
+    story: "Vegetable-tanned hides softened with rose water and finished with brass zippers.",
+  },
+  {
+    city: "Taza Mountains",
+    detail: "Berber cooperatives",
+    story: "Women weave Beni Ourain rugs over winter, knot by knot beside cedar fireplaces.",
+  },
+];
 
 const Index = () => {
   const navigate = useNavigate();
+  const featuredProducts = useMemo<Product[]>(() => getFeaturedProducts(6), []);
+
+  const handleSearch = (query: string) => {
+    navigate(`/search?q=${encodeURIComponent(query)}`);
+  };
 
   return (
-    <Layout transparentHeader={false}>
-      <div className="min-h-screen bg-background">
-        {/* Hero Section - eBay/Amazon Inspired */}
-        <div className="bg-secondary pt-20 pb-12 zelij-pattern-dark">
-          <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-              {/* Main Promotional Banner - Left */}
-              <div className="lg:col-span-2 bg-gradient-to-br from-primary via-primary to-primary/90 rounded-2xl p-8 md:p-12 text-primary-foreground flex flex-col justify-between min-h-[400px]">
-                <div>
-                  <div className="inline-block px-3 py-1 bg-secondary/20 rounded-full border border-secondary/30 mb-6">
-                    <span className="text-sm font-semibold">
-                      🇲🇦 Authentic Moroccan Crafts
-                    </span>
-                  </div>
-                  
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                    Traditional Artisan
-                    <span className="block mt-2">Goods & Crafts</span>
-                  </h1>
-                  
-                  <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 max-w-xl">
-                    Handmade treasures from Moroccan artisans. Shop authentic bazaar goods and support local craftsmen.
-                  </p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button
-                    onClick={() => navigate('/search')}
-                    size="lg"
-                    className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-bold text-lg px-8"
-                  >
-                    Start Shopping
-                    <ArrowRight className="ml-2" size={20} />
-                  </Button>
-                  <Button
-                    onClick={() => navigate('/search?category=crafts')}
-                    size="lg"
-                    variant="outline"
-                    className="bg-transparent border-2 border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground/10 font-semibold"
-                  >
-                    Browse Crafts
-                  </Button>
-                </div>
+    <Layout transparentHeader>
+      <div className="space-y-24 pb-20">
+        <section className="relative overflow-hidden pt-12">
+          <div className="container mx-auto grid gap-10 rounded-[2.5rem] border border-white/40 bg-white/70 p-8 shadow-[0_25px_60px_rgba(34,22,18,0.12)] backdrop-blur lg:grid-cols-2">
+            <div className="space-y-6">
+              <Badge className="w-fit rounded-full bg-primary/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.4em] text-primary">
+                Maison Beldi
+              </Badge>
+              <div className="space-y-4">
+                <h1 className="font-display text-4xl leading-tight text-secondary lg:text-5xl">
+                  The Moroccan pieces you were meant to collect.
+                </h1>
+                <p className="text-base text-muted-foreground">
+                  We scout hidden riads, desert cooperatives, and coastal studios to bring you
+                  soulful objects — available on-demand, globally shipped.
+                </p>
               </div>
-
-              {/* Featured Category Tiles - Right */}
-              <div className="grid grid-cols-2 gap-4">
-                <button
-                  onClick={() => navigate('/search?category=handicrafts')}
-                  className="bg-card hover:bg-primary border-2 border-border hover:border-primary rounded-xl p-6 transition-all duration-300 group"
-                >
-                  <div className="w-16 h-16 mx-auto mb-3 bg-primary/10 group-hover:bg-primary-foreground rounded-xl flex items-center justify-center">
-                    <Sparkles className="text-primary group-hover:text-primary" size={32} />
-                  </div>
-                  <h3 className="font-bold text-foreground group-hover:text-primary-foreground text-sm">Handicrafts</h3>
-                </button>
-
-                <button
-                  onClick={() => navigate('/search?category=clothing')}
-                  className="bg-card hover:bg-primary border-2 border-border hover:border-primary rounded-xl p-6 transition-all duration-300 group"
-                >
-                  <div className="w-16 h-16 mx-auto mb-3 bg-primary/10 group-hover:bg-primary-foreground rounded-xl flex items-center justify-center">
-                    <Shirt className="text-primary group-hover:text-primary" size={32} />
-                  </div>
-                  <h3 className="font-bold text-foreground group-hover:text-primary-foreground text-sm">Clothing</h3>
-                </button>
-
-                <button
-                  onClick={() => navigate('/search?category=decor')}
-                  className="bg-card hover:bg-primary border-2 border-border hover:border-primary rounded-xl p-6 transition-all duration-300 group"
-                >
-                  <div className="w-16 h-16 mx-auto mb-3 bg-primary/10 group-hover:bg-primary-foreground rounded-xl flex items-center justify-center">
-                    <HomeIcon className="text-primary group-hover:text-primary" size={32} />
-                  </div>
-                  <h3 className="font-bold text-foreground group-hover:text-primary-foreground text-sm">Home Decor</h3>
-                </button>
-
-                <button
-                  onClick={() => navigate('/search?category=spices')}
-                  className="bg-card hover:bg-primary border-2 border-border hover:border-primary rounded-xl p-6 transition-all duration-300 group"
-                >
-                  <div className="w-16 h-16 mx-auto mb-3 bg-primary/10 group-hover:bg-primary-foreground rounded-xl flex items-center justify-center">
-                    <Coffee className="text-primary group-hover:text-primary" size={32} />
-                  </div>
-                  <h3 className="font-bold text-foreground group-hover:text-primary-foreground text-sm">Spices & Foods</h3>
-                </button>
+              <SearchBar onSearch={handleSearch} />
+              <SuggestedSearches onSearchClick={handleSearch} />
+              <div className="flex flex-wrap gap-6 pt-4 text-xs uppercase tracking-[0.4em] text-muted-foreground">
+                <span>47 verified ateliers</span>
+                <span>Delivery in 3-7 days</span>
+                <span>Concierge sourcing</span>
               </div>
             </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {ritualCapsules.map((capsule) => (
+                <button
+                  key={capsule.title}
+                  className="group overflow-hidden rounded-[1.5rem] border border-border/70 bg-white text-left shadow-md transition hover:-translate-y-1"
+                  onClick={() => navigate(capsule.href)}
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={capsule.image}
+                      alt={capsule.title}
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0" />
+                    <ArrowUpRight className="absolute right-4 top-4 h-5 w-5 text-white" />
+                  </div>
+                  <CardContent className="space-y-2 p-4">
+                    <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+                      Capsule
+                    </p>
+                    <h3 className="text-lg font-semibold text-secondary">{capsule.title}</h3>
+                    <p className="text-sm text-muted-foreground">{capsule.description}</p>
+                  </CardContent>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
 
-        {/* Features Grid */}
-        <div className="py-16 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                Why Choose BELDI?
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Experience the convenience of shopping from authentic Moroccan artisans
+        <section className="container mx-auto px-4">
+          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Collections</p>
+              <h2 className="text-3xl font-semibold text-secondary">Rituals to step into</h2>
+              <p className="text-sm text-muted-foreground">
+                Tap into heritage craft through curated lifestyle edits.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-              <div className="bg-card border border-border rounded-xl p-6 text-center hover:border-primary transition-all duration-300 group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 group-hover:bg-primary rounded-full flex items-center justify-center transition-colors duration-300">
-                  <BadgeCheck className="text-primary group-hover:text-primary-foreground transition-colors" size={32} />
-                </div>
-                <h3 className="font-bold text-lg text-foreground mb-2">Verified Artisans</h3>
-                <p className="text-sm text-muted-foreground">
-                  Every business is verified and authenticated for quality assurance
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-xl p-6 text-center hover:border-primary transition-all duration-300 group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 group-hover:bg-primary rounded-full flex items-center justify-center transition-colors duration-300">
-                  <Package className="text-primary group-hover:text-primary-foreground transition-colors" size={32} />
-                </div>
-                <h3 className="font-bold text-lg text-foreground mb-2">Cash on Delivery</h3>
-                <p className="text-sm text-muted-foreground">
-                  Pay when you receive your order. No upfront payment required
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-xl p-6 text-center hover:border-primary transition-all duration-300 group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 group-hover:bg-primary rounded-full flex items-center justify-center transition-colors duration-300">
-                  <TrendingUp className="text-primary group-hover:text-primary-foreground transition-colors" size={32} />
-                </div>
-                <h3 className="font-bold text-lg text-foreground mb-2">Live Tracking</h3>
-                <p className="text-sm text-muted-foreground">
-                  Track your order in real-time from artisan to your doorstep
-                </p>
-              </div>
-
-              <div className="bg-card border border-border rounded-xl p-6 text-center hover:border-primary transition-all duration-300 group">
-                <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 group-hover:bg-primary rounded-full flex items-center justify-center transition-colors duration-300">
-                  <Zap className="text-primary group-hover:text-primary-foreground transition-colors" size={32} />
-                </div>
-                <h3 className="font-bold text-lg text-foreground mb-2">Fast Delivery</h3>
-                <p className="text-sm text-muted-foreground">
-                  Quick delivery across Morocco with trusted local couriers
-                </p>
-              </div>
-            </div>
+            <Button variant="link" className="text-primary" onClick={() => navigate("/search")}>
+              Shop all capsules
+            </Button>
           </div>
-        </div>
-
-        {/* How It Works */}
-        <div className="py-16 bg-muted/20">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                How It Works
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Shop authentic Moroccan crafts in three simple steps
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="text-center">
-                <div className="relative inline-flex items-center justify-center mb-6">
-                  <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center">
-                    <Search className="text-primary-foreground" size={36} />
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary text-secondary-foreground rounded-full flex items-center justify-center font-bold text-sm">
-                    1
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">Browse & Search</h3>
-                <p className="text-muted-foreground">
-                  Explore thousands of handmade products from verified Moroccan artisans
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="relative inline-flex items-center justify-center mb-6">
-                  <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center">
-                    <ShoppingCart className="text-primary-foreground" size={36} />
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary text-secondary-foreground rounded-full flex items-center justify-center font-bold text-sm">
-                    2
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">Add to Cart</h3>
-                <p className="text-muted-foreground">
-                  Select your favorite items and add them to your cart for easy checkout
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="relative inline-flex items-center justify-center mb-6">
-                  <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center">
-                    <Heart className="text-primary-foreground" size={36} />
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary text-secondary-foreground rounded-full flex items-center justify-center font-bold text-sm">
-                    3
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">Enjoy & Support</h3>
-                <p className="text-muted-foreground">
-                  Receive authentic crafts and support local artisans across Morocco
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Featured Artisans */}
-        <div className="py-16 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-8 max-w-6xl mx-auto">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                Featured Artisans
-              </h2>
-              <Button
-                onClick={() => navigate('/search')}
-                variant="ghost"
-                className="text-primary hover:text-primary hover:bg-primary/10 font-semibold"
+          <div className="grid gap-6 md:grid-cols-3">
+            {ritualCapsules.map((capsule) => (
+              <Card
+                key={capsule.title}
+                className="overflow-hidden rounded-[1.75rem] border border-border/70 bg-white/80 shadow-lg"
               >
-                View All
-                <ChevronRight size={18} className="ml-1" />
+                <div className="relative h-56 overflow-hidden">
+                  <img
+                    src={capsule.image}
+                    alt={capsule.title}
+                    className="h-full w-full object-cover transition duration-500 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4">
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-white/80">Ritual</p>
+                    <h3 className="text-2xl font-semibold text-white">{capsule.title}</h3>
+                  </div>
+                </div>
+                <CardContent className="space-y-3 p-5">
+                  <p className="text-sm text-secondary">{capsule.description}</p>
+                  <Button
+                    variant="ghost"
+                    className="group w-fit px-0 text-primary"
+                    onClick={() => navigate(capsule.href)}
+                  >
+                    Explore capsule
+                    <ArrowUpRight className="ml-2 h-4 w-4 transition group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="container mx-auto px-4">
+          <div className="flex items-center justify-between pb-8">
+            <div>
+              <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Featured</p>
+              <h2 className="text-3xl font-semibold text-secondary">Seasonal capsule</h2>
+              <p className="text-sm text-muted-foreground">
+                Limited pieces ready to ship from artisan studios.
+              </p>
+            </div>
+            <Badge className="rounded-full bg-primary/10 px-4 py-2 text-primary">
+              {featuredProducts.length} pieces
+            </Badge>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+
+        <section className="container mx-auto px-4">
+          <div className="rounded-[2rem] border border-border/70 bg-white/80 p-8 shadow-xl">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+                  Atlas Dispatch
+                </p>
+                <h2 className="text-3xl font-semibold text-secondary">Journeys behind each piece</h2>
+                <p className="text-sm text-muted-foreground">
+                  Travel with us through sourcing trips documented in the latest field notes.
+                </p>
+              </div>
+              <Button
+                className="rounded-full bg-secondary text-secondary-foreground"
+                onClick={() => navigate("/reviews")}
+              >
+                Read journal
               </Button>
             </div>
-
-            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {[
-                { name: "Traditional Pottery Studio", city: "Fès", products: "120+ items", rating: 4.8 },
-                { name: "Moroccan Leather Goods", city: "Marrakech", products: "85+ items", rating: 4.6 },
-                { name: "Handwoven Carpets", city: "Rabat", products: "200+ items", rating: 4.9 }
-              ].map((artisan, i) => (
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
+              {atlasJourneys.map((journey) => (
                 <div
-                  key={i}
-                  onClick={() => navigate('/business/1')}
-                  className="group bg-card border border-border hover:border-primary rounded-xl overflow-hidden transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md"
+                  key={journey.city}
+                  className="rounded-2xl border border-border/70 bg-white/70 p-5 shadow-sm"
                 >
-                  <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/10 relative overflow-hidden">
-                    <div className="absolute top-3 left-3 z-10">
-                      <span className="px-2 py-1 bg-primary text-primary-foreground rounded-md text-xs font-semibold flex items-center gap-1">
-                        <Star size={12} className="fill-primary-foreground" />
-                        {artisan.rating}
-                      </span>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="flex items-center gap-3 text-sm font-semibold text-secondary">
+                    <MapPin size={16} />
+                    {journey.city}
                   </div>
-                  <div className="p-5">
-                    <h3 className="font-bold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
-                      {artisan.name}
-                    </h3>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                      <MapPin size={14} className="text-primary" />
-                      <span>{artisan.city}</span>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{artisan.products}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Stats Section */}
-        <div className="py-16 bg-secondary text-secondary-foreground zelij-pattern-dark">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center">
-              <div>
-                <div className="text-4xl md:text-5xl font-bold text-primary mb-1">500+</div>
-                <div className="text-sm text-secondary-foreground/70">Artisans</div>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-bold text-primary mb-1">10K+</div>
-                <div className="text-sm text-secondary-foreground/70">Handmade Items</div>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-bold text-primary mb-1">50K+</div>
-                <div className="text-sm text-secondary-foreground/70">Happy Customers</div>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-bold text-primary mb-1">16</div>
-                <div className="text-sm text-secondary-foreground/70">Regions</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Testimonials */}
-        <div className="py-16 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                What Our Customers Say
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Real experiences from satisfied customers across Morocco
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {[
-                { name: "Amina Benali", city: "Casablanca", rating: 5, text: "The quality of handmade pottery I received exceeded all expectations. Fast delivery and authentic craftsmanship!" },
-                { name: "Youssef Alami", city: "Rabat", rating: 5, text: "BELDI made it so easy to find traditional leather goods. The artisan was professional and the product is beautiful." },
-                { name: "Fatima Idrissi", city: "Marrakech", rating: 5, text: "As someone who values authentic Moroccan crafts, BELDI is a game-changer. Highly recommend to everyone!" }
-              ].map((testimonial, i) => (
-                <div
-                  key={i}
-                  className="bg-card border border-border rounded-xl p-6 hover:border-primary transition-all duration-300"
-                >
-                  <div className="flex items-center gap-1 mb-4">
-                    {[...Array(testimonial.rating)].map((_, j) => (
-                      <Star key={j} size={16} className="text-primary fill-primary" />
-                    ))}
-                  </div>
-                  <Quote className="text-primary/30 mb-3" size={24} />
-                  <p className="text-foreground mb-4 italic">
-                    "{testimonial.text}"
+                  <p className="mt-2 text-xs uppercase tracking-[0.4em] text-muted-foreground">
+                    {journey.detail}
                   </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                      <Users className="text-primary" size={20} />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-sm text-foreground">{testimonial.name}</p>
-                      <p className="text-xs text-muted-foreground">{testimonial.city}</p>
-                    </div>
-                  </div>
+                  <p className="mt-3 text-sm text-muted-foreground">{journey.story}</p>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Newsletter Signup */}
-        <div className="py-16 bg-muted/20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-2xl mx-auto text-center">
-              <Mail className="text-primary mx-auto mb-4" size={48} />
-              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-                Stay Updated
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                Get notified about new artisans, exclusive offers, and special promotions
+        <section className="container mx-auto px-4">
+          <div className="grid gap-6 rounded-[2rem] border border-border/70 bg-secondary text-secondary-foreground p-8 lg:grid-cols-2">
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-[0.4em] text-white/60">
+                Beldi Concierge
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1"
-                />
-                <Button
-                  size="lg"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8"
-                >
-                  Subscribe
-                </Button>
+              <h2 className="text-3xl font-semibold text-white">
+                Need a bespoke sourcing trip?
+              </h2>
+              <p className="text-sm text-white/80">
+                Our stylists will handpick items from the souk for your home, event, or gifting
+                list. Share mood boards and we ship curated edits within days.
+              </p>
+              <Button
+                className="rounded-full bg-white/90 text-secondary"
+                onClick={() => navigate("/search?q=concierge")}
+              >
+                Start a brief
+              </Button>
+            </div>
+            <div className="rounded-2xl bg-white/10 p-6">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white">
+                  <Sparkles size={20} />
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.4em] text-white/60">
+                    Testimonials
+                  </p>
+                  <p className="text-lg font-semibold text-white">“Like shopping in the medina.”</p>
+                </div>
               </div>
-              <p className="text-xs text-muted-foreground mt-4">
-                We respect your privacy. Unsubscribe at any time.
+              <p className="mt-4 text-sm text-white/80">
+                “The concierge sourced antique zellige tiles and coordinated shipping to Paris in
+                four days. Everything arrived with provenance notes.”
               </p>
             </div>
           </div>
-        </div>
-
-        {/* Final CTA */}
-        <div className="py-16 bg-gradient-to-br from-primary via-primary to-primary/90 zelij-pattern-dark">
-          <div className="container mx-auto px-4">
-            <div className="max-w-2xl mx-auto text-center space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">
-                Discover Handmade Treasures
-              </h2>
-              <p className="text-lg text-primary-foreground/90">
-                Authentic Moroccan crafts from local artisans across Morocco
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                <Button
-                  onClick={() => navigate('/search')}
-                  size="lg"
-                  className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-bold px-8"
-                >
-                  Browse Artisan Crafts
-                </Button>
-                <Button
-                  onClick={() => navigate('/auth')}
-                  size="lg"
-                  variant="outline"
-                  className="bg-transparent border-2 border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary font-semibold px-8"
-                >
-                  Sign Up Free
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
+        </section>
       </div>
     </Layout>
   );
 };
 
 export default Index;
+

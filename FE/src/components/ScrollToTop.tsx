@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
+type LenisWindow = Window & {
+  lenis?: {
+    scrollTo: (value: number, options?: { immediate?: boolean }) => void;
+  };
+};
+
 /**
  * ScrollToTop component that scrolls to top of page on route change
  * This fixes the issue where navigating from page A to page B
@@ -17,7 +23,7 @@ const ScrollToTop = () => {
       
       // Also reset scroll position for smooth scroll libraries (like Lenis)
       // Check if Lenis instance exists and scroll to top
-      const lenisInstance = (window as any).lenis;
+      const lenisInstance = (window as LenisWindow).lenis;
       if (lenisInstance) {
         lenisInstance.scrollTo(0, { immediate: true });
       }
