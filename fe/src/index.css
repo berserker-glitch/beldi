@@ -1,8 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-beldi-sand: #FDFCF8;
+  --color-beldi-tadelakt: #BEB3A3;
+  --color-beldi-tadelaktLight: #E6E0D5;
+  --color-beldi-majorelle: #1C39BB;
+  --color-beldi-majorelleLight: #3D5AFE;
+  --color-beldi-terracotta: #C06C48;
+  --color-beldi-brass: #D4AF37;
+  --color-beldi-charcoal: #1A1A1A;
+  --color-beldi-olive: #556B2F;
+
+  --font-sans: 'Outfit', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+
+  --animate-fade-in: fadeIn 0.5s ease-out;
+  --animate-slide-up: slideUp 0.8s ease-out;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
 
 @layer base {
   body {
