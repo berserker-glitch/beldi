@@ -35,19 +35,24 @@ const typographyVariants = cva("text-beldi-charcoal", {
     },
 });
 
+type TypographyVariants = VariantProps<typeof typographyVariants>;
+
 interface TypographyProps
-    extends React.HTMLAttributes<HTMLHeadingElement | HTMLParagraphElement>,
-    VariantProps<typeof typographyVariants> {
+    extends React.HTMLAttributes<HTMLElement>,
+    TypographyVariants {
     as?: React.ElementType;
 }
 
 export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
     ({ className, variant, color, align, as, ...props }, ref) => {
         const Component = as || (variant === "body" || variant === "small" || variant === "caption" ? "p" : variant || "h1");
+        // Ensure variant is treated correctly or define specific element types if needed
+        // Defaulting to h1 if variant is a heading string, but 'h1' | 'h2' etc are valid variants
+        // The issue was likely strict typing on 'variant' passed to cva not matching 'string'
 
         return (
-            // @ts-ignore
             <Component
+                // @ts-ignore
                 ref={ref}
                 className={cn(typographyVariants({ variant, color, align, className }))}
                 {...props}
