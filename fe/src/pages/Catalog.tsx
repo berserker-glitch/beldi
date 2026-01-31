@@ -2,8 +2,11 @@ import { Typography } from "../components/ui/Typography";
 import { FilterSidebar } from "../components/features/FilterSidebar";
 import { PRODUCTS } from "../data/products";
 import { Button } from "../components/ui/Button";
+import { useCart } from "../context/CartContext";
 
 export function CatalogPage() {
+    const { addItem } = useCart();
+
     return (
         <div className="container-custom py-12">
             <div className="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-beldi-tadelakt/20 pb-6">
@@ -52,6 +55,7 @@ export function CatalogPage() {
                                     <Button
                                         variant="primary"
                                         className="absolute bottom-0 left-0 w-full translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+                                        onClick={(e) => { e.stopPropagation(); addItem(product); }}
                                     >
                                         Add to Cart
                                     </Button>
@@ -76,6 +80,7 @@ export function CatalogPage() {
                                     <Button
                                         variant="primary"
                                         className="absolute bottom-0 left-0 w-full translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+                                        onClick={(e) => { e.stopPropagation(); addItem(product); }}
                                     >
                                         Add to Cart
                                     </Button>

@@ -3,10 +3,12 @@ import { Button } from "../components/ui/Button";
 import { PRODUCTS } from "../data/products";
 import { useParams, Link } from "react-router-dom";
 import { Star, Truck, ShieldCheck, MapPin } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 export function ProductDetailsPage() {
     const { id } = useParams();
     const product = PRODUCTS.find(p => p.id === id) || PRODUCTS[0]; // Fallback to first product for demo
+    const { addItem } = useCart();
 
     return (
         <div className="pb-20">
@@ -70,7 +72,13 @@ export function ProductDetailsPage() {
                         </div>
 
                         <div className="space-y-4">
-                            <Button variant="primary" fullWidth size="lg" className="uppercase tracking-widest text-sm font-semibold">
+                            <Button
+                                variant="primary"
+                                fullWidth
+                                size="lg"
+                                className="uppercase tracking-widest text-sm font-semibold"
+                                onClick={() => addItem(product)}
+                            >
                                 Add to Cart &bull; ${product.price}
                             </Button>
                             <Typography variant="caption" className="text-center block text-gray-400">
