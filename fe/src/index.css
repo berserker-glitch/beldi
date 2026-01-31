@@ -40,6 +40,18 @@
       opacity: 1;
     }
   }
+
+  @keyframes kenBurns {
+    0% {
+      transform: scale(1);
+    }
+
+    100% {
+      transform: scale(1.1);
+    }
+  }
+
+  --animate-ken-burns: kenBurns 20s ease-out infinite alternate;
 }
 
 @layer base {
@@ -68,5 +80,23 @@
 
   .btn-outline {
     @apply border border-beldi-charcoal text-beldi-charcoal px-6 py-3 rounded-none font-medium hover:bg-beldi-charcoal hover:text-white transition-all;
+  }
+
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+
+  .glass-panel-dark {
+    @apply bg-black/40 backdrop-blur-md border border-white/10;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 }
