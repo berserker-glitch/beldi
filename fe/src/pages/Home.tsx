@@ -1,127 +1,104 @@
-import { Typography } from "../components/ui/Typography";
 import { Button } from "../components/ui/Button";
 import { CATEGORIES, PRODUCTS } from "../data/products";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 
 export function HomePage() {
-    const featuredProducts = PRODUCTS.slice(0, 3);
+    // Featured product for the "Spotlight" section
+    const spotlightProduct = PRODUCTS[0];
 
     return (
-        <div className="pb-24">
-            {/* Hero Section - Immersive & Premium */}
-            <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0">
-                    <img
-                        src="https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=2678&auto=format&fit=crop"
-                        alt="Moroccan Architecture"
-                        className="w-full h-full object-cover animate-ken-burns" /* Assuming animate-ken-burns or similar simple scale animation */
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/30" />
-                </div>
-
-                <div className="relative container-custom h-full flex flex-col justify-center items-center text-center text-white z-10 pt-20">
-                    <div className="space-y-8 animate-fade-in opacity-0" style={{ animationDelay: '0.2s', animationFillMode: 'forwards' }}>
-                        <Typography variant="caption" className="text-white/90 tracking-[0.4em] uppercase text-sm md:text-base font-medium">
-                            Est. 1994 &bull; Marrakech
-                        </Typography>
-
-                        <div className="space-y-2">
-                            <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif font-light tracking-tight leading-[0.9] drop-shadow-lg">
-                                The Soul of <br />
-                                <span className="italic block mt-2 text-beldi-sand">Morocco</span>
-                            </h1>
+        <div className="bg-beldi-sand text-beldi-charcoal">
+            {/* HERO SECTION: Split Screen / Editorial */}
+            <section className="relative h-screen min-h-[700px] flex flex-col lg:flex-row overflow-hidden border-b border-beldi-charcoal/10">
+                {/* Left: Content */}
+                <div className="w-full lg:w-5/12 h-screen flex flex-col justify-center px-8 md:px-16 pt-32 lg:pt-0 relative z-10 bg-beldi-sand order-2 lg:order-1">
+                    <div className="space-y-6 animate-slide-up">
+                        <div className="flex items-center gap-3">
+                            <span className="w-8 h-px bg-beldi-majorelle" />
+                            <span className="text-xs uppercase tracking-[0.2em] font-medium text-beldi-majorelle">Est. 1994 Marrakech</span>
                         </div>
 
-                        <p className="max-w-xl mx-auto text-lg md:text-2xl text-white/90 leading-relaxed font-light mt-8 font-serif italic">
-                            Handcrafted heritage for the modern home.
+                        <h1 className="text-5xl md:text-7xl font-serif leading-[0.9] tracking-tight text-beldi-charcoal">
+                            Modern <br />
+                            <span className="italic font-light text-beldi-terracotta">Heritage</span>
+                        </h1>
+
+                        <p className="text-lg md:text-xl font-light text-gray-600 max-w-md leading-relaxed">
+                            A curated dialogue between Moroccan artisan tradition and contemporary living.
                         </p>
 
-                        <div className="pt-12">
-                            <Button className="bg-white text-beldi-majorelle hover:bg-beldi-sand rounded-none px-12 py-4 h-auto tracking-[0.2em] uppercase text-sm font-bold transition-all duration-300 hover:scale-105">
-                                Shop The Collection
+                        <div className="pt-8 flex flex-col sm:flex-row gap-4">
+                            <Button variant="primary" size="lg" className="w-full sm:w-auto rounded-none tracking-widest uppercase text-xs font-bold px-10 py-5">
+                                Explore Collection
+                            </Button>
+                            <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-none tracking-widest uppercase text-xs font-bold px-10 py-5 border-beldi-charcoal hover:bg-beldi-charcoal hover:text-white">
+                                Our Story
                             </Button>
                         </div>
                     </div>
                 </div>
 
-                {/* Scroll Indicator */}
-                <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white/70">
-                    <ArrowRight className="rotate-90 w-6 h-6" />
+                {/* Right: Immersive Visual */}
+                <div className="w-full lg:w-7/12 h-[50vh] lg:h-full relative order-1 lg:order-2">
+                    <img
+                        src="https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=2678&auto=format&fit=crop"
+                        alt="Moroccan Interior"
+                        className="w-full h-full object-cover animate-ken-burns"
+                    />
+                    <div className="absolute inset-0 bg-black/10" />
                 </div>
             </section>
 
-            {/* Intro Section - Editorial Style */}
-            <section className="py-32 bg-beldi-sand">
-                <div className="container-custom grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-                    <div className="lg:col-span-5 space-y-10 order-2 lg:order-1 relative">
-                        <div className="absolute -left-20 top-0 w-40 h-40 bg-beldi-majorelle/5 rounded-full blur-3xl" />
+            {/* MARQUEE BANNER */}
+            <div className="bg-beldi-majorelle text-white py-4 overflow-hidden whitespace-nowrap border-b border-beldi-charcoal">
+                <div className="inline-flex animate-infinite-scroll items-center gap-8">
+                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                        <div key={i} className="flex items-center gap-8">
+                            <span className="text-sm font-sans tracking-[0.2em] uppercase">Free Worldwide Shipping on Orders Over $500</span>
+                            <Star size={12} fill="currentColor" className="text-beldi-sand" />
+                        </div>
+                    ))}
+                </div>
+            </div>
 
-                        <div className="space-y-6 relative">
-                            <div className="flex items-center space-x-4">
-                                <span className="h-px w-12 bg-beldi-majorelle"></span>
-                                <span className="text-beldi-majorelle uppercase tracking-widest text-sm font-semibold">Our Philosophy</span>
+            {/* CATEGORY NAV - Visual Cards */}
+            <section className="py-24 px-4 md:px-8">
+                <div className="container-custom mx-auto">
+                    <div className="flex justify-between items-end mb-12">
+                        <h2 className="text-4xl md:text-5xl font-serif">Curated Departments</h2>
+                        <Button variant="link" className="hidden md:flex text-sm uppercase tracking-widest underline decoration-1 underline-offset-4">View All</Button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 h-[auto] md:h-[600px]">
+                        {/* Primary Category - Large */}
+                        <div className="md:col-span-8 md:row-span-2 relative group overflow-hidden bg-gray-100 cursor-pointer">
+                            <img
+                                src={CATEGORIES[0].image}
+                                alt={CATEGORIES[0].name}
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
+                            <div className="absolute bottom-0 left-0 p-8 md:p-12">
+                                <h3 className="text-4xl md:text-6xl text-white font-serif mb-4">{CATEGORIES[0].name}</h3>
+                                <div className="flex items-center gap-2 text-white opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0 duration-500">
+                                    <span className="uppercase tracking-widest text-sm">Shop Now</span>
+                                    <ArrowRight size={16} />
+                                </div>
                             </div>
-
-                            <h2 className="text-5xl md:text-6xl font-serif text-beldi-charcoal leading-tight">
-                                Modern <span className="text-beldi-majorelle italic">Beldi</span>
-                            </h2>
-
-                            <p className="text-gray-600 text-lg md:text-xl leading-relaxed font-light">
-                                We bridge the gap between ancient craftsmanship and contemporary design. Every piece in our collection tells a story of patience, skill, and heritage.
-                                From the clay pits of Tamegroute to the weaving looms of the High Atlas, we bring you the authentic spirit of Morocco.
-                            </p>
                         </div>
 
-                        <Button variant="link" className="group text-beldi-terracotta text-lg px-0 hover:no-underline">
-                            Read Our Story <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
-                        </Button>
-                    </div>
-
-                    <div className="lg:col-span-7 relative aspect-[4/3] md:aspect-[16/9] lg:aspect-[4/5] overflow-hidden order-1 lg:order-2 group">
-                        <div className="absolute inset-0 border-[1px] border-beldi-majorelle/20 m-4 z-20 pointer-events-none" />
-                        <img
-                            src="https://images.unsplash.com/photo-1517260739337-6799d2cc9fe4?q=80&w=2669&auto=format&fit=crop"
-                            alt="Artisan at work"
-                            className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-1000 ease-out"
-                        />
-                    </div>
-                </div>
-            </section>
-
-            {/* Categories - Mosaic/Masonry Feel */}
-            <section className="bg-white py-24">
-                <div className="container-custom">
-                    <div className="flex justify-between items-end mb-16">
-                        <div className="space-y-2">
-                            <span className="text-beldi-majorelle uppercase tracking-widest text-sm font-semibold">Catalog</span>
-                            <h3 className="text-4xl md:text-5xl font-serif">Curated Collections</h3>
-                        </div>
-                        <Button variant="link" className="hidden md:flex text-beldi-charcoal hover:text-beldi-majorelle">View All Collections</Button>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 h-auto md:h-[700px]">
-                        {CATEGORIES.map((category, idx) => (
-                            <div
-                                key={category.id}
-                                className={`relative group overflow-hidden cursor-pointer ${idx === 0 ? 'md:col-span-2 md:row-span-2' : 'md:col-span-1 md:row-span-1'
-                                    }`}
-                            >
-                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-500 z-10" />
+                        {/* Secondary Categories - Smaller */}
+                        {CATEGORIES.map((category) => (
+                            <div key={category.id} className="md:col-span-4 relative group overflow-hidden bg-gray-100 cursor-pointer h-[300px] md:h-auto">
                                 <img
                                     src={category.image}
                                     alt={category.name}
-                                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000 ease-out"
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
-                                <div className="absolute inset-0 flex flex-col justify-end p-8 z-20">
-                                    <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                        <h3 className={`text-white font-serif mb-2 ${idx === 0 ? "text-4xl" : "text-2xl"}`}>
-                                            {category.name}
-                                        </h3>
-                                        <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                                            <span className="text-white text-sm uppercase tracking-widest">Explore</span>
-                                            <ArrowRight className="w-4 h-4 text-white" />
-                                        </div>
-                                    </div>
+                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
+                                <div className="absolute bottom-0 left-0 p-6">
+                                    <h3 className="text-2xl text-white font-serif mb-2">{category.name}</h3>
+                                    <span className="h-px w-0 group-hover:w-full bg-white block transition-all duration-500" />
                                 </div>
                             </div>
                         ))}
@@ -129,77 +106,100 @@ export function HomePage() {
                 </div>
             </section>
 
-            {/* Featured Products - Glassmorphism Cards */}
-            <section className="bg-beldi-tadelaktLight/30 py-32">
-                <div className="container-custom">
-                    <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-                        <span className="text-beldi-majorelle uppercase tracking-widest text-sm font-semibold">Weekly Selection</span>
-                        <h2 className="text-5xl font-serif text-beldi-charcoal">Featured Treasures</h2>
-                        <p className="text-gray-500 text-lg font-light">
-                            Unique pieces verified by our experts for authenticity and quality.
+            {/* EDITORIAL BLOCK - Texture & Story */}
+            <section className="bg-beldi-charcoal text-beldi-sand py-32 relative overflow-hidden">
+                <div className="container-custom grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
+                    <div className="space-y-8">
+                        <span className="text-beldi-majorelleLight uppercase tracking-[0.2em] text-xs font-bold">The Artisan's Touch</span>
+                        <h2 className="text-5xl md:text-7xl font-serif leading-none">
+                            Imperfection is <br />
+                            <span className="italic text-gray-400">the only perfection.</span>
+                        </h2>
+                        <p className="text-lg text-gray-400 font-light max-w-md leading-relaxed">
+                            We reject mass production. Each piece in our collection bears the mark of the human hand—subtle irregularities that tell a story of ancient techniques passed down through generations of Maalems.
                         </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        {featuredProducts.map((product) => (
-                            <div key={product.id} className="group cursor-pointer">
-                                <div className="relative aspect-[3/4] overflow-hidden mb-6 bg-gray-100 shadow-sm">
-                                    <img
-                                        src={product.images[0]}
-                                        alt={product.name}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    />
-
-                                    {/* Glass Overlay Actions */}
-                                    <div className="absolute inset-x-4 bottom-4 translate-y-[120%] group-hover:translate-y-0 transition-transform duration-500 ease-out z-20">
-                                        <div className="glass-panel p-4 flex justify-between items-center backdrop-blur-xl">
-                                            <span className="font-serif text-beldi-charcoal hover:text-beldi-majorelle transition-colors">Quick View</span>
-                                            <div className="h-4 w-px bg-gray-300 mx-2" />
-                                            <span className="font-serif font-medium text-beldi-charcoal hover:text-beldi-majorelle transition-colors flex items-center gap-1">
-                                                Add to Cart
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="text-center space-y-1">
-                                    <h5 className="text-xl font-serif text-beldi-charcoal group-hover:text-beldi-majorelle transition-colors duration-300">{product.name}</h5>
-                                    <p className="text-sm text-gray-500 uppercase tracking-wider">{product.material}</p>
-                                    <p className="text-lg font-medium text-beldi-charcoal mt-1">${product.price}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="text-center mt-20">
-                        <Button variant="outline" size="lg" className="border-beldi-charcoal text-beldi-charcoal hover:bg-beldi-charcoal hover:text-white px-12 tracking-widest uppercase text-sm">
-                            View All Products
+                        <Button className="border border-white/20 text-white hover:bg-white hover:text-beldi-charcoal rounded-none px-10 py-4 uppercase tracking-widest text-xs mt-8">
+                            Read the Journal
                         </Button>
                     </div>
+                    <div className="relative">
+                        <div className="aspect-[3/4] overflow-hidden border border-white/10 p-2">
+                            <img
+                                src="https://images.unsplash.com/photo-1517260739337-6799d2cc9fe4?q=80&w=2669&auto=format&fit=crop"
+                                alt="Hands working clay"
+                                className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 transition-all duration-700"
+                            />
+                        </div>
+                        {/* Decorative Element */}
+                        <div className="absolute -bottom-10 -right-10 text-9xl font-serif text-white/5 pointer-events-none select-none">
+                            1994
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* Immersive Parallax Story Section */}
-            <section className="relative py-40 overflow-hidden">
-                <div className="absolute inset-0 bg-fixed bg-center bg-cover" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1533038590840-1cde6e668a91?q=80&w=2574&auto=format&fit=crop')" }}>
-                    <div className="absolute inset-0 bg-beldi-majorelle/90 mix-blend-multiply opacity-90" />
-                    <div className="absolute inset-0 bg-black/20" />
+            {/* FEATURED / SPOTLIGHT PRODUCT */}
+            <section className="py-24 border-b border-beldi-charcoal/10">
+                <div className="container-custom">
+                    <div className="flex flex-col md:flex-row gap-16 items-center">
+                        <div className="w-full md:w-1/2 aspect-square bg-gray-100 overflow-hidden relative group">
+                            <img
+                                src={spotlightProduct.images[0]}
+                                alt={spotlightProduct.name}
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-x-8 bottom-8 bg-white/90 backdrop-blur-sm p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                                <p className="font-serif text-2xl text-beldi-charcoal">{spotlightProduct.name}</p>
+                                <p className="font-sans text-sm text-gray-500 mb-4">{spotlightProduct.region}</p>
+                                <Button fullWidth variant="primary" size="sm">Quick Add - ${spotlightProduct.price}</Button>
+                            </div>
+                        </div>
+                        <div className="w-full md:w-1/2 space-y-8">
+                            <div className="flex items-center gap-4">
+                                <span className="text-beldi-majorelle font-serif italic text-2xl">Editor's Pick</span>
+                                <span className="h-px flex-1 bg-gray-200" />
+                            </div>
+                            <h2 className="text-5xl md:text-6xl font-serif text-beldi-charcoal">
+                                {spotlightProduct.name}
+                            </h2>
+                            <p className="text-xl text-gray-600 font-light leading-relaxed">
+                                {spotlightProduct.description}
+                            </p>
+                            <div className="grid grid-cols-2 gap-8 border-t border-gray-100 pt-8">
+                                <div>
+                                    <p className="text-xs uppercase tracking-widest text-gray-400 mb-1">Material</p>
+                                    <p className="font-serif text-xl">{spotlightProduct.material}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs uppercase tracking-widest text-gray-400 mb-1">Region</p>
+                                    <p className="font-serif text-xl">{spotlightProduct.region}</p>
+                                </div>
+                            </div>
+                            <Button variant="primary" size="lg" className="w-auto px-12 mt-8 rounded-none uppercase tracking-widest">
+                                View Product Details
+                            </Button>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-                <div className="relative container-custom text-center space-y-10 text-white max-w-5xl mx-auto z-10">
-                    <span className="inline-block border border-white/30 px-4 py-1 rounded-full text-sm uppercase tracking-widest backdrop-blur-sm">Sustainable Impact</span>
-
-                    <h2 className="text-5xl md:text-7xl font-serif leading-tight">
-                        "We don't just sell objects. We act as custodians of a disappearing art form."
-                    </h2>
-
-                    <p className="text-xl md:text-2xl font-light text-white/80 max-w-3xl mx-auto">
-                        Supporting over 200 artisan families across Morocco, ensuring fair wages and preserving techniques that have been passed down for centuries.
-                    </p>
-
-                    <Button className="bg-white text-beldi-majorelle hover:bg-beldi-sand mt-8 px-10 py-4 text-sm font-bold uppercase tracking-widest border-none">
-                        Meet The Artisans
-                    </Button>
+            {/* INSTAGRAM / SOCIAL PROOF */}
+            <section className="py-20 text-center">
+                <p className="font-serif italic text-2xl text-gray-400 mb-8">@beldi.official</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-0.5">
+                    {[
+                        'https://images.unsplash.com/photo-1533038590840-1cde6e668a91?q=80&w=2574',
+                        'https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=2678',
+                        'https://images.unsplash.com/photo-1517260739337-6799d2cc9fe4?q=80&w=2669',
+                        'https://images.unsplash.com/photo-1628102377484-938f368dd625?q=80&w=2574'
+                    ].map((url, i) => (
+                        <div key={i} className="aspect-square relative group overflow-hidden cursor-pointer">
+                            <img src={url} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                            <div className="absolute inset-0 bg-beldi-majorelle/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                                <span className="font-sans text-xs uppercase tracking-widest">Follow Us</span>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </section>
         </div>

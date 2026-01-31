@@ -51,7 +51,18 @@
     }
   }
 
+  @keyframes infiniteScroll {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
   --animate-ken-burns: kenBurns 20s ease-out infinite alternate;
+  --animate-infinite-scroll: infiniteScroll 25s linear infinite;
 }
 
 @layer base {
