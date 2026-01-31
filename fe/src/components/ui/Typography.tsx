@@ -15,7 +15,7 @@ const typographyVariants = cva("text-beldi-charcoal", {
             small: "font-sans text-sm leading-relaxed text-gray-600",
             caption: "font-sans text-xs uppercase tracking-widest text-gray-500",
         },
-        color: {
+        themeColor: {
             default: "text-beldi-charcoal",
             primary: "text-beldi-majorelle",
             secondary: "text-beldi-terracotta",
@@ -30,7 +30,7 @@ const typographyVariants = cva("text-beldi-charcoal", {
     },
     defaultVariants: {
         variant: "body",
-        color: "default",
+        themeColor: "default",
         align: "left",
     },
 });
@@ -38,21 +38,20 @@ const typographyVariants = cva("text-beldi-charcoal", {
 type TypographyVariants = VariantProps<typeof typographyVariants>;
 
 interface TypographyProps
-    extends React.HTMLAttributes<HTMLElement>,
+    extends Omit<React.AllHTMLAttributes<HTMLElement>, "color" | "as">,
     TypographyVariants {
     as?: React.ElementType;
 }
 
 export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
-    ({ className, variant, color, align, as, ...props }, ref) => {
+    ({ className, variant, themeColor, align, as, ...props }, ref) => {
         const Component = as || (variant === "body" || variant === "small" || variant === "caption" ? "p" : variant || "h1");
 
         return (
             <Component
                 // @ts-ignore
                 ref={ref}
-                // Force type assertion to bypass strict null checks on cva variants
-                className={cn(typographyVariants({ variant, color, align, className } as any))}
+                className={cn(typographyVariants({ variant, themeColor, align, className }))}
                 {...props}
             />
         );
